@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+table {
+ -- font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+    <script>
+function myFunction() {
+
+var user = document.getElementById("user").value;
+var message = "[[${removeme}]]";
+document.getElementById("statusbar").innerHTML= message;
+
+}
+</script>
+
+</head>
+<body>
+
+<h1>DB Tracks </h1>
+
+<input type="text" placeholder="Enter your host name..." id="user" th:filed="*{user}"/>
+<input type="submit"/>
+<button type="button" onclick="document.getElementById('statusbar').innerHTML=${removeme}">Try it</button>
+<button type="button"
+        onclick="location.href='/Details'">
+    Retreieve</button>
+
+<button type="button"
+        onclick="location.href='/Details'">
+    Clear</button>
+
+<button type="button"
+        th:onclick="document.getElementById('statusbar').innerHTML = ${removeme}">
+
+    Remove Me</button>
+
+<button type="button"
+        onclick="document.getElementById('statusbar').innerHTML = ${addme}">
+    Remove Me</button>
+
+<p id="statusbar"></p>
+
+
+</body>
+</html>
+
+

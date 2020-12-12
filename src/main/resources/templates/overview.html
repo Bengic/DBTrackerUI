@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel='icon' href='favicon.ico' type='image/x-icon' sizes="16x16" />
+    <style>
+.my-custom-scrollbar {
+position: relative;
+height: 700px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+
+
+</style>
+
+
+
+    <script>
+    function retrieveGuests(id) {
+    var url = '/Getid';
+
+    if (id != '') {
+        url = url + '/' + id ;
+            $("#resultsBlock").load(url);
+    }
+
+
+}
+</script>
+
+
+
+</head>
+<body>
+
+<form id = "form1" action="#" th:action="@{/DBOverview}" th:object="${basicview}" method="get">
+
+
+    <div class="header">
+
+
+        <h1> <!--img src="bengic_logo.png" alt="logo" /-->DB Tracks
+            <span class="text-info" style= "display:flex;align-items:flex-end;float : right;font-style: italic; font-size : 14pt;" id="status" th:text="*{status}"></span>
+        </h1>
+    </div>
+        <p>
+            <input type="text" placeholder="hostname" th:field="*{user}" />
+            <input type="submit"  class="btn btn-primary btn-sm" id="Retreive" name="_Action" value="Retrieve"/>
+            <input type="submit" class="btn btn-outline-danger btn-sm" id="Clear" name="_Action" value="Clear"/>
+            <input type="submit" class="btn btn-outline-info btn-sm" id="Get Select SQL" name="_Action" value="GetSelect" />
+            <a  href="/DBDetails"   style="text-align:right" > Detailed View </a>
+            
+        </p>
+
+
+    <div style="width: 100%; overflow: hidden;" >
+
+
+
+        <div class="table-wrapper-scroll-y my-custom-scrollbar" id="first-div" style="width: 650px; float: left;" >
+            <table id="dtVerticalScrolltable1" class="table table-striped table-bordered table-sm" cellspacing="0"
+                   width="100%">
+        <tr>
+            <th class="th-sm">Id</th>
+            <th class="th-sm">Action</th>
+            <th class="th-sm">Table</th>
+            <th class="th-sm">DateTime</th>
+            <th class="th-sm">Select</th>
+
+        </tr>
+        <tr th:each="change : *{details}">
+            <td th:text="${change.id}">1</td>
+            <td th:text="${change.action}">Text ...</td>
+            <td><a th:href="|javascript:retrieveGuests('${change.id}')|" th:text="${change.table}">Title ...</a></td>
+
+
+            <td th:text="${change.datemodified}">Text ...</td>
+            <td th:text="${change.oldVal}"></td>
+
+        </tr>
+    </table>
+    </div>
+
+        <div  style="margin-left: 675px;" id="resultsBlock" >
+
+        </div>
+
+
+    </div>
+</form>
+
+<script type = "text/javascript" src = "webjars/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"  href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+<script>
+$(document).on("click", ":submit", function(event){
+
+  if ( $(this).val() === "Retrieve" ) {
+  	if ( $( "input" ).first().val().trim().length > 0 ) {
+       		return;
+	}else{
+        if (!confirm("Host name not specified. Retrieving all records")){
+             event.preventDefault();
+             $("#form1 input:text, #form1 textarea").first().focus();
+         }else{
+            return;
+         }
+
+	}
+  }
+if ( $(this).val() === "GetSelect" ) {
+  	if ( $( "input" ).first().val().trim().length > 0 ) {
+       		return;
+	}else{
+
+      if (!confirm("Host name not specified. Retrieving all records")){
+             event.preventDefault();
+             $("#form1 input:text, #form1 textarea").first().focus();
+         }else{
+            return;
+         }
+
+	}
+  }
+
+
+
+  if ( $(this).val() === "Clear" ) {
+    if ( $( "input" ).first().val().trim().length > 0 ) {
+       		return;
+	}else{
+	    alert ("Please enter the host name.");
+	    $("#form1 input:text, #form1 textarea").first().focus();
+		event.preventDefault();
+	}
+  }
+
+});
+
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+$('#dtVerticalScrollExample').DataTable({
+"scrollY": "200px",
+"scrollCollapse": true,
+});
+$('.dataTables_length').addClass('bs-select');
+});
+
+
+</script>
+
+</body>
+<footer>
+
+        Copyright bengic.com &copy; 2020
+
+</footer>
+</html>
+
+

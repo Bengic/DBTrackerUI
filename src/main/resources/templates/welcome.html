@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+.my-custom-scrollbar {
+position: relative;
+height: 700px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+font-size : 8pt;
+  border-collapse: collapse;
+}
+
+<style>
+
+
+</style>
+
+    <script type = "text/javascript" src = "webjars/jquery/3.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet"  href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+
+</head>
+<body>
+<form id = "form1" action="#" th:action="@{/DBDetails}" th:object="${basicview}" method="get">
+    <div class="header">
+
+
+    <h1> <!--img src="bengic_logo.png" alt="logo" /-->DB Tracks
+    <span class="text-info" style= "display:flex;align-items:flex-end;float : right;font-style: italic; font-size : 14pt;" id="status" th:text="*{status}"></span>
+    </h1>
+    </div>
+
+    <p>
+            <input type="text" placeholder="hostname" th:field="*{user}" />
+            <input type="submit"   class="btn btn-primary btn-sm" id="Retreive" name="_Action" value="Retrieve" />
+            <input type="submit" id="Clear" class="btn btn-outline-danger btn-sm"  name="_Action" value="Clear" />
+            <a href="/DBOverview" >Overview</a>
+</p>
+    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+        <table id="dtVerticalScrolltable1" class="table table-striped table-bordered table-sm" cellspacing="0"
+               width="100%">
+        <tr>
+            <th class="th-sm">Id</th>
+            <th class="th-sm">Action</th>
+            <th class="th-sm">Table</th>
+            <th class="th-sm">Column</th>
+            <th class="th-sm">Old Value</th>
+            <th class="th-sm">New Value</th>
+            <th class="th-sm">DateTime</th>
+        </tr>
+        <tr th:each="change : *{details}">
+            <td th:text="${change.id}">1</td>
+            <td th:text="${change.action}">Text ...</td>
+            <td th:text="${change.table}">Text ...</td>
+            <td th:text="${change.col}">Text ...</td>
+            <td th:text="${change.oldVal}">Text ...</td>
+            <td th:text="${change.newVal}">Text ...</td>
+            <td th:text="${change.datemodified}">Text ...</td>
+        </tr>
+    </table>
+    </div>
+
+</form>
+<script type = "text/javascript" src = "webjars/jquery/3.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"  href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+<script>
+$(document).on("click", ":submit", function(event){
+
+if ( $(this).val() === "Retrieve" ) {
+if ( $( "input" ).first().val().trim().length > 0 ) {
+return;
+}else{
+if (!confirm("Host name not specified. Retrieving all records")){
+$("#form1 input:text, #form1 textarea").first().focus();
+event.preventDefault();
+}else{
+return;
+}
+
+}
+}
+if ( $(this).val() === "GetSelect" ) {
+if ( $( "input" ).first().val().trim().length > 0 ) {
+return;
+}else{
+if (!confirm("Please enter requesting host's name. Or Do you want to retrieve all records")){
+$("#form1 input:text, #form1 textarea").first().focus();
+event.preventDefault();
+}else{
+return;
+}
+
+}
+}
+
+
+
+if ( $(this).val() === "Clear" ) {
+if ( $( "input" ).first().val().trim().length > 0 ) {
+return;
+}else{
+alert ("Please enter the host name.");
+$("#form1 input:text, #form1 textarea").first().focus();
+event.preventDefault();
+}
+}
+
+
+});
+
+
+
+</script>
+
+
+</body>
+<footer>
+
+        Copyright bengic.com &copy; 2020
+
+</footer>
+</html>
+
+

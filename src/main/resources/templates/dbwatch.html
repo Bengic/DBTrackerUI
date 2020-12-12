@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+table {
+ -- font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+    <script>
+function myFunction() {
+  var x = location.hostname;
+  var network = new ActiveXObject('WScript.Network');
+
+    alert("hi");
+  document.getElementById("demo").innerHTML= network.computerName;
+   document.getElementById("demo1").innerHTML= network.computerName;
+
+}
+
+</script>
+</head>
+<body>
+
+<h1>DB Tracks</h1> <h1 id="user">DB Tracks</h1>
+
+
+
+<button type="button"
+        onclick="location.href='/Details'">
+    Clear</button>
+
+<button type="button"
+        onclick="location.href='/Clean'">
+    Clear</button>
+
+<button type="button"
+        onclick="myFunction()">
+    Add Me</button>
+
+
+
+
+<button type="button"
+        onclick="document.getElementById('demo1').innerHTML = ${removeme}">
+    Remove Me</button>
+
+<p id="demo1"></p><p id="demo"></p>
+
+<h2></h2>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Action</th>
+        <th>Table</th>
+        <th>Column</th>
+        <th>Old</th>
+        <th>New</th>
+        <th>DateTime</th>
+    </tr>
+
+    <tr th:each="change : ${changes}">
+        <td th:text="${change.id}">1</td>
+        <td th:text="${change.action}">Text ...</td>
+        <td><a href="#" th:text="${change.table}">Title ...</a></td>
+        <td th:text="${change.col}">Text ...</td>
+        <td th:text="${change.oldVal}">Text ...</td>
+        <td th:text="${change.newVal}">Text ...</td>
+        <td th:text="${change.datemodified}">Text ...</td>
+    </tr>
+
+    </table>
+</body>
+</html>
+
+
